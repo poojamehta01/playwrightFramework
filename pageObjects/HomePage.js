@@ -1,5 +1,5 @@
 const { expect } = require("@playwright/test");
-
+const { BASE_URL, TITLE } = require('../constants/index');
 class HomePage{
     constructor(page) {
         this.page = page;
@@ -8,8 +8,8 @@ class HomePage{
 
     async navigateToHomePageAndValidate(page){
         console.log("********** Start navigateToHomePageAndValidate ********** \n")
-        await page.goto("https://www.demoblaze.com/index.html");
-        await expect(page).toHaveTitle("STORE");
+        await page.goto(BASE_URL);
+        await expect(page).toHaveTitle(TITLE);
         await expect(this.logo).toBeVisible();
         console.log("********** Finish navigateToHomePageAndValidate ********** \n")
     }

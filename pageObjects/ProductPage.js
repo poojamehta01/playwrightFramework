@@ -1,6 +1,7 @@
 const { expect } = require("@playwright/test");
 const commonLocators = require('../utils/CommonLocators')
 const commonValidators = require('../utils/CommonValidators')
+const {PRODUCT_PAGE,DIALOG_MESSAGE, PRODUCT_NAME,BUTON_TEXT,ROLE_TYPE } = require('../constants/index');
 class ProductPage{
     constructor(page,log) {
         this.page = page
@@ -8,13 +9,13 @@ class ProductPage{
         this.commonLocators = new commonLocators(this.log)
         this.commonValidators = new commonValidators(this.log)
         this.actualDialogMessage = 'Product Added';
-        this.actualPageUrl = "https://www.demoblaze.com/prod.html?idp_=1"
+
     }
     
     
     async clickWebElementProductOnHomePage(page){
         console.log("********** Start clickWebElementProductOnHomePage ********** \n")
-        const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Samsung galaxy s6')
+        const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.LINK, PRODUCT_NAME.SAMNSUNG)
         const checkContent = await this.commonLocators.getTextContentForWebElement(webElement)
         await webElement.click()
         console.log("********** Finish clickWebElementProductOnHomePage ********** \n")
@@ -22,7 +23,7 @@ class ProductPage{
     async validateProductPage(page){
         console.log("********** Start validateProductPage ********** \n")
         this.currentUrl = page.url()
-        this.commonValidators.validateWebElementToContainText(this.currentUrl, this.actualPageUrl)
+        this.commonValidators.validateWebElementToContainText(this.currentUrl, PRODUCT_PAGE)
         console.log("********** Finish validateProductPage ********** \n")
     }
 
@@ -33,9 +34,10 @@ class ProductPage{
         dialog.accept()
         console.log("dialog message")
         console.log(dialog.message())
+        this.commonValidators.validateWebElementToContainText(dialog.message(),DIALOG_MESSAGE)
         });
-        const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Add to cart')
-        await webElement.click()
+        const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.LINK, BUTON_TEXT.ADD_TO_CART)
+        webElement.click()
         console.log("********** Finish clickWebElementAddProductToCart ********** \n")
     }
  

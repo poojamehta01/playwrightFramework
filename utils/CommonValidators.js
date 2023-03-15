@@ -17,6 +17,7 @@ class CommonValidators {
 
     async validateWebElementToBeVisible(webElement){
         console.log(`********** Start validateWebElementToBeVisible ********** \n`)
+        console.log(`Checking for ${webElement}`)
         console.log(`Validating if ${webElement} is visible`)
         await playwrightExpect(webElement).toBeVisible();
         console.log(`********** Finish  validateWebElementToBeVisible ********** \n`)
@@ -24,7 +25,7 @@ class CommonValidators {
    
     async validateWebElementCount(webElement,count){
         console.log(`********** Start validateWebElementCount ********** \n`)
-        console.log(`Validating if ${webElement} has count`)
+        console.log(`Checking for ${webElement}`)
         await playwrightExpect(webElement).toHaveCount(count);
         console.log(`********** Finish  validateWebElementCount ********** \n`)
     }

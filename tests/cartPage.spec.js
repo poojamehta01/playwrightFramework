@@ -9,11 +9,13 @@ test('click addToCart and navigate to cartPage', async ({ page },testInfo) => {
     const cartPage = new CartPage(page);
 
     await homePage.navigateToHomePageAndValidate(page);
+   
     await productPage.clickWebElementProductOnHomePage(page);
     await productPage.validateProductPage(page);
     await productPage.clickWebElementAddProductToCart(page);
     await page.screenshot({path:"screenshots/addToCartCompleted.png"})
     await testInfo.attach('addToCartCompleted', { body: await page.screenshot(), contentType: 'image/png' });
+    
     await cartPage.clickWebElementCartPage(page);
     await cartPage.validateProductOnCartPage(page);
     await page.screenshot({path:"screenshots/cartPage.png"})

@@ -27,7 +27,7 @@ test('validate product added by clicking on popup ok', async ({ page },testInfo)
     await homePage.navigateToHomePageAndValidate(page);
     await productPage.clickWebElementProductOnHomePage(page);
     await productPage.validateProductPage(page);
-    await productPage.addProductToCartAndValidate(page);
+    await productPage.clickWebElementAddProductToCart(page,1);
     await page.screenshot({path:"screenshots/addToCartCompleted.png"})
     await testInfo.attach('addToCartCompleted', { body: await page.screenshot(), contentType: 'image/png' });
     

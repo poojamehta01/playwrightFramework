@@ -1,17 +1,19 @@
+
+const commonValidators = require('../utils/CommonValidators')
 class CommonLocators{
     constructor(log){
         this.log = log
+        this.commonValidators = new commonValidators(this.log)
     }
 
 
     async getWebElementByRole(page, type, locatorName){
-    
+        
         console.log(`********** Start getWebElementByRole **********\n`)
         console.log(`Getting WebElement with type : ${type}, LocatorName : ${locatorName}`)
         console.log(`********** Finish getWebElementByRole **********\n`)
+        //this.commonValidators.validateWebElementToBeVisible(page.getByRole(type, { name: locatorName}))
                 return await page.getByRole(type, { name: locatorName})  
-        
-    
            
         }
     
@@ -20,6 +22,7 @@ class CommonLocators{
        
         console.log(`********** Start clickOnWebElement ********** \n`)
         console.log(`Click On WebElement having locator identifier as ${locator}`)
+        //this.commonValidators.validateWebElementToBeVisible(page.locator(`${locator}`))
         await page.locator(`${locator}`).click()
         console.log(`********** Finish clickOnWebElement ********** \n`)
     
@@ -31,6 +34,7 @@ class CommonLocators{
         console.log(`********** Start getWebElementByPlaceholder ********** \n`)
         console.log(`Getting WebElement with PlaceHolderName : ${placeHolderName}`)
         console.log(`********** Finish getWebElementByPlaceholder **********  \n`)
+        this.commonValidators.validateWebElementToBeVisible(page.getByPlaceholder(placeHolderName))
         return await page.getByPlaceholder(placeHolderName) 
          
         
@@ -41,6 +45,7 @@ class CommonLocators{
         console.log(`********** Start getWebElementByXPathBasedOnTagNameValue  **********\n`)     
         console.log(`Getting WebElement Having tagName : ${tagName},LocatorName : ${LocatorName},LocatorValue: ${LocatorValue}`)
         console.log(`********** Finish getWebElementByXPathBasedOnTagNameValue ********** \n`)
+        this.commonValidators.validateWebElementToBeVisible(page.locator(`//${tagName}[contains(@${LocatorName}, \'${LocatorValue}\')]`))
         return await page.locator(`//${tagName}[contains(@${LocatorName}, \'${LocatorValue}\')]`)
              
        
@@ -59,6 +64,7 @@ class CommonLocators{
        
         console.log(`********** Start inputTextForWebElement ********** \n`) 
         console.log(`Input WebElement : ${webElement} With Text Input as ${inputText}`)
+        this.commonValidators.validateWebElementToBeVisible(webElement)
         await webElement.fill(inputText)
         console.log(`********** Finish inputTextForWebElement ********** \n`) 
    
@@ -66,6 +72,7 @@ class CommonLocators{
 
     async getTextContentForWebElement(webElement){
         console.log(`Getting textContent for the WebElement : ${webElement}`)
+        this.commonValidators.validateWebElementToBeVisible(webElement)
         const textContent = await webElement.textContent()
         console.log(`The Text Content is : ${textContent}`)
         console.log(`********** Finish getTextContentForWebElement ********** \n`) 
