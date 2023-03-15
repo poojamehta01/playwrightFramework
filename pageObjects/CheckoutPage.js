@@ -1,7 +1,8 @@
 const { expect } = require("@playwright/test");
 const commonLocators = require('../utils/CommonLocators')
 const commonValidators = require('../utils/CommonValidators')
-const {BUTON_TEXT,ROLE_TYPE,LABEL, ADD_ORDER_DETAILS, MESSAGE } = require('../constants/index');
+const {BUTON_TEXT,ROLE_TYPE, MESSAGE } = require('../constants/commonConstant');
+const {LABEL, ADD_ORDER_DETAILS } = require('../constants/testConstants/checkoutPageConstants');
 let actualAmount = ""
 class CheckoutPage{
     constructor(page,log) {

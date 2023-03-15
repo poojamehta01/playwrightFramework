@@ -1,7 +1,7 @@
 const { expect } = require("@playwright/test");
 const commonLocators = require('../utils/CommonLocators')
 const commonValidators = require('../utils/CommonValidators')
-const {PRODUCT_PAGE,MESSAGE, PRODUCT_NAME,BUTON_TEXT,ROLE_TYPE } = require('../constants/index');
+const {MESSAGE,BUTON_TEXT,ROLE_TYPE } = require('../constants/commonConstant');
 const actualDialogMessage ="";
 class ProductPage{
     constructor(page,log) {

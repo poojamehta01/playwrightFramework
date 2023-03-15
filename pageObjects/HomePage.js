@@ -1,5 +1,5 @@
 const { expect } = require("@playwright/test");
-const { BASE_URL, TITLE } = require('../constants/index');
+const { BASE_URL, TITLE } = require('../constants/testConstants/homePageConstants');
 class HomePage{
     constructor(page) {
         this.page = page;
