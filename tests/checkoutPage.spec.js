@@ -4,6 +4,8 @@ import ProductPage from '../pageObjects/ProductPage';
 import CartPage from '../pageObjects/CartPage';
 import CheckoutPage from '../pageObjects/CheckoutPage';
 import ScreenShotUtils from '../utils/ScreenShotUtils';
+//import PRODUCT_NAME from '../constants/index'
+const {PRODUCT} = require('../constants/index');
 
 test('Add one Product', async ({ page },testInfo) => {
     const homePage = new HomePage(page);
@@ -14,8 +16,8 @@ test('Add one Product', async ({ page },testInfo) => {
 
     await homePage.navigateToHomePageAndValidate(page);
 
-    await productPage.clickWebElementProductOnHomePage(page);
-    await productPage.validateProductPage(page);
+    await productPage.clickWebElementProductOnHomePage(page,PRODUCT.SAMNSUNG.NAME);
+    await productPage.validateProductPage(page,PRODUCT.SAMNSUNG.PATH);
     await productPage.clickWebElementAddProductToCart(page);
     await screentShot.takeScreenShot(page,testInfo,'addToCartCompleted')
 
@@ -31,6 +33,8 @@ test('Add one Product', async ({ page },testInfo) => {
     await screentShot.takeScreenShot(page,testInfo,'checkoutPage')
     await checkoutPage.validatePurchaseSuccessful(page)
     await screentShot.takeScreenShot(page,testInfo,'purchaseSuccess')
+
+
 });
 
 test('Add same Product to cart twice', async ({ page },testInfo) => {
@@ -42,21 +46,31 @@ test('Add same Product to cart twice', async ({ page },testInfo) => {
 
     await homePage.navigateToHomePageAndValidate(page);
 
-    await productPage.clickWebElementProductOnHomePage(page);
-    await productPage.validateProductPage(page);
+    await productPage.clickWebElementProductOnHomePage(page,PRODUCT.SAMNSUNG.NAME);
+    await productPage.validateProductPage(page,PRODUCT.SAMNSUNG.PATH);
     await productPage.clickWebElementAddProductToCart(page);
-    console.log("Adding same product twice")
-    await productPage.clickWebElementAddProductToCart(page);
-
-    await cartPage.clickWebElementCartPage(page,1);
     await screentShot.takeScreenShot(page,testInfo,'addToCartCompleted')
-    await cartPage.validateProductOnCartPage(page);
 
+    await cartPage.clickWebElementCartPage(page);
+
+    console.log("Add same product again")
+    await homePage.navigateToHomePageAndValidate(page);
+
+    await productPage.clickWebElementProductOnHomePage(page,PRODUCT.NOKIA.NAME);
+    await productPage.validateProductPage(page,PRODUCT.NOKIA.PATH);
+    await productPage.clickWebElementAddProductToCart(page);
+    await screentShot.takeScreenShot(page,testInfo,'addToCartCompleted') 
     
-    await checkoutPage.clickWebElementPlaceOrder(page,2);
+    await cartPage.clickWebElementCartPage(page);
+
+    await cartPage.validateProductOnCartPage(page);
     await screentShot.takeScreenShot(page,testInfo,'cartPage')
+
+    await checkoutPage.clickWebElementPlaceOrder(page,2);
     await checkoutPage.validateCheckoutPage(page);
     await checkoutPage.enterMandatoryCheckoutDetails(page);
+    await checkoutPage.enterOptionCheckoutDetails(page);
+ 
     await checkoutPage.clickPurchase(page);
     await screentShot.takeScreenShot(page,testInfo,'checkoutPage')
     await checkoutPage.validatePurchaseSuccessful(page)

@@ -1,9 +1,9 @@
 module.exports = {
     BASE_URL : 'https://www.demoblaze.com/index.html',
     TITLE : 'STORE',
-    PRODUCT_PAGE : 'https://www.demoblaze.com/prod.html?idp_=1',
-    PRODUCT_NAME :  {
-        SAMNSUNG : 'Samsung galaxy s6'
+    PRODUCT :  {
+        SAMNSUNG : {NAME:'Samsung galaxy s6', PATH:'https://www.demoblaze.com/prod.html?idp_=1'},
+        NOKIA :{'NAME': 'Nokia lumia 1520',PATH :'https://www.demoblaze.com/prod.html?idp_=2'}
     },
     BUTON_TEXT : {
         ADD_TO_CART : 'Add to cart',
@@ -34,6 +34,9 @@ module.exports = {
         MONTH : '02',
         YEAR : '2023',
     },
-    DIALOG_MESSAGE : 'Product added'
+    MESSAGE :{
+        DIALOG_MESSAGE :'Product added',
+        SUCCESS_MESSAGE : 'Thank you for your purchase!'
+    }
 
 }

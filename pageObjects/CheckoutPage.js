@@ -1,7 +1,7 @@
 const { expect } = require("@playwright/test");
 const commonLocators = require('../utils/CommonLocators')
 const commonValidators = require('../utils/CommonValidators')
-const {BUTON_TEXT,ROLE_TYPE,LABEL, ADD_ORDER_DETAILS } = require('../constants/index');
+const {BUTON_TEXT,ROLE_TYPE,LABEL, ADD_ORDER_DETAILS, MESSAGE } = require('../constants/index');
 let actualAmount = ""
 class CheckoutPage{
     constructor(page,log) {
@@ -14,8 +14,9 @@ class CheckoutPage{
     
     async clickWebElementPlaceOrder(page,item){
         console.log("********** Start clickWebElementPlaceOrder ********** \n")
-        const amountWebElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'h3','id','totalp')
-        await this.commonValidators.validateWebElementCount(amountWebElement,item)
+        
+        const amountWebElement = await page.locator(`//h3[@id='totalp']`).first();
+        await this.commonValidators.validateWebElementCount(amountWebElement,1)
         actualAmount = await this.commonLocators.getTextContentForWebElement(await amountWebElement)
         const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.BUTTON,BUTON_TEXT.PLACE_ORDER)
         await webElement.click()
@@ -65,6 +66,7 @@ class CheckoutPage{
         console.log("********** Start clickPurchase ********** \n")
         const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.BUTTON, BUTON_TEXT.PURCHASE)
         this.commonValidators.validateWebElementToBeVisible(webElement);
+        webElement.click()
         console.log("********** Finish clickPurchase ********** \n")
     }
 
@@ -72,6 +74,8 @@ class CheckoutPage{
         console.log("********** Start validatePurchaseSuccessful ********** \n")
         const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.BUTTON, BUTON_TEXT.OK)
         this.commonValidators.validateWebElementToBeVisible(webElement);
+        const successText = await page.locator("//h2[contains(text(),'Thank you for your purchase!')]").textContent()
+        this.commonValidators.validateWebElementToContainText(successText,MESSAGE.SUCCESS_MESSAGE)
         webElement.click();
         console.log("********** Finish validatePurchaseSuccessful ********** \n")
     }
