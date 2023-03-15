@@ -21,3 +21,9 @@ Here we'll be automating UI testcases with help of Playwright using JS.
   npx playwright show-report
 ```
 
+## Codegen
+
+```bash
+  npx playwright codegen https://www.demoblaze.com/index.html 
+```
+ 
