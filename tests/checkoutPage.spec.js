@@ -16,13 +16,15 @@ test('click placeOrder and navigate to checkOutPage', async ({ page },testInfo) 
     await productPage.clickWebElementProductOnHomePage(page);
     await productPage.validateProductPage(page);
     await productPage.clickWebElementAddProductToCart(page);
-    await screentShot.takeScreenShot(page,testInfo,'addToCartCompleted')
     await cartPage.clickWebElementCartPage(page);
+    await screentShot.takeScreenShot(page,testInfo,'addToCartCompleted')
     await cartPage.validateProductOnCartPage(page);
-    await screentShot.takeScreenShot(page,testInfo,'cartPage')
     await checkoutPage.clickWebElementPlaceOrder(page);
+    await screentShot.takeScreenShot(page,testInfo,'cartPage')
     await checkoutPage.validateCheckoutPage(page);
     await checkoutPage.enterCheckoutDetails(page);
+    await checkoutPage.clickPurchase(page);
     await screentShot.takeScreenShot(page,testInfo,'checkoutPage')
-  
+    await checkoutPage.validatePurchaseSuccessful(page)
+    await screentShot.takeScreenShot(page,testInfo,'purchaseSuccess')
 });

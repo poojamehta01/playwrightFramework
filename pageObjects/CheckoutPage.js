@@ -36,7 +36,7 @@ class CheckoutPage{
         await this.commonLocators.inputTextForWebElement(nameElement,"test")
        
         const countryElement = await this.commonLocators.getWebElementByLabel(page,`Country:`)
-        await this.commonLocators.inputTextForWebElement(webElement,"test")
+        await this.commonLocators.inputTextForWebElement(countryElement,"test")
 
         const cityElement = await this.commonLocators.getWebElementByLabel(page,`City:`)
         await this.commonLocators.inputTextForWebElement(cityElement,"test")
@@ -50,8 +50,7 @@ class CheckoutPage{
         const yearElement = await this.commonLocators.getWebElementByLabel(page,`Year:`)
         await this.commonLocators.inputTextForWebElement(yearElement,"test")
 
-        const webElement = await this.commonLocators.getWebElementByLabel(page,`Total: ${actualAmount}`)
-        await this.commonLocators.inputTextForWebElement(webElement,"test")
+
         console.log("********** Finish enterCheckoutDetails ********** \n")
     }
 
@@ -65,8 +64,8 @@ class CheckoutPage{
     async validatePurchaseSuccessful(page){
         console.log("********** Start validatePurchaseSuccessful ********** \n")
         const webElement = await this.commonLocators.getWebElementByRole(page,'button', 'OK')
-
         this.commonValidators.validateWebElementToBeVisible(webElement);
+        this.commonLocators.clickOnWebElement(webElement)
         console.log("********** Finish validatePurchaseSuccessful ********** \n")
     }
    
