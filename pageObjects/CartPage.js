@@ -17,8 +17,6 @@ class CartPage{
         console.log("********** Start clickWebElementCartPage ********** \n")
         const webElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'a', 'id','cartur')
         await webElement.click()
-        // const webElement = await page.locator(`//a[@id='cartur']`)
-        // await webElement.click({ timeout: 30000 })
         console.log("********** Finish clickWebElementCartPage ********** \n")
     }
     async validateProductOnCartPage(page){
@@ -26,12 +24,7 @@ class CartPage{
       
         const tableElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'tbody','id','tbodyid')
         this.commonValidators.validateWebElementCount(tableElement,1)
-        //const webElement = await this.commonLocators.getWebElementByRole(page,'cell','Title')
-        // this.homePage.
-        // await page.getByRole('cell', { name: 'Title' }).click();
-
-        // for (const li of await this.commonLocators.getWebElementByRole(page,'cell','Title').all())
-        //     await li.click();
+    ;
         console.log("********** Finish validateProductOnCartPage ********** \n")
     }
 

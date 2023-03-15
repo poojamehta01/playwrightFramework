@@ -57,8 +57,6 @@ class CheckoutPage{
 
         const yearElement = await this.commonLocators.getWebElementByLabel(page, LABEL.YEAR)
         await this.commonLocators.inputTextForWebElement(yearElement,ADD_ORDER_DETAILS.YEAR)
-
-
         console.log("********** Finish enterMandatoryCheckoutDetails ********** \n")
 
     }

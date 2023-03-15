@@ -9,7 +9,6 @@ class ProductPage{
         this.log = log
         this.commonLocators = new commonLocators(this.log)
         this.commonValidators = new commonValidators(this.log)
-        this.actualDialogMessage = 'Product Added';
 
     }
     
@@ -17,7 +16,8 @@ class ProductPage{
     async clickWebElementProductOnHomePage(page,productName){
         console.log("********** Start clickWebElementProductOnHomePage ********** \n")
         const webElement = await this.commonLocators.getWebElementByRole(page,ROLE_TYPE.LINK, productName)
-        const checkContent = await this.commonLocators.getTextContentForWebElement(webElement)
+        const productNameActual = await this.commonLocators.getTextContentForWebElement(webElement)
+        this.commonValidators.validateWebElementToContainText(productNameActual,productName)
         await webElement.click()
         console.log("********** Finish clickWebElementProductOnHomePage ********** \n")
     }
