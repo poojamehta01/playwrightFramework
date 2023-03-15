@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import HomePage from '../pageObjects/HomePage';
 
 test('navigate to homePage and validate', async ({ page }) => {
