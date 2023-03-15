@@ -15,8 +15,7 @@ test('click addToCart and navigate to cartPage', async ({ page },testInfo) => {
     await page.screenshot({path:"screenshots/addToCartCompleted.png"})
     await testInfo.attach('addToCartCompleted', { body: await page.screenshot(), contentType: 'image/png' });
     await cartPage.clickWebElementCartPage(page);
-
-    await expect(page.getByRole('link', { name: 'Delete' })).toBeVisible();
+    await cartPage.validateProductOnCartPage(page);
     await page.screenshot({path:"screenshots/cartPage.png"})
     await testInfo.attach('cartPage', { body: await page.screenshot(), contentType: 'image/png' });
 

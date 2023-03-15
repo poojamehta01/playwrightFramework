@@ -16,6 +16,12 @@ class CartPage{
         await webElement.click()
         console.log("********** finish clickWebElementCartPage ********** \n")
     }
+    async validateProductOnCartPage(page){
+        console.log("********** started clickWebElementCartPage ********** \n")
+        const webElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'tr', 'class','success')
+        await expect(webElement).toBeVisible();
+        console.log("********** finish clickWebElementCartPage ********** \n")
+    }
 
 
 }
