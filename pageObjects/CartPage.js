@@ -11,17 +11,18 @@ class CartPage{
       }
     
     async clickWebElementCartPage(page){
-        console.log("********** started clickWebElementCartPage ********** \n")
+        console.log("********** Start clickWebElementCartPage ********** \n")
         const webElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'a', 'id','cartur')
         await webElement.click()
-        console.log("********** finish clickWebElementCartPage ********** \n")
+        console.log("********** Finish clickWebElementCartPage ********** \n")
     }
     async validateProductOnCartPage(page){
-        console.log("********** started clickWebElementCartPage ********** \n")
+        console.log("********** Start validateProductOnCartPage ********** \n")
         const webElement = await this.commonLocators.getWebElementByXPathBasedOnTagNameValue(page,'tr', 'class','success')
-        await expect(webElement).toBeVisible();
-        console.log("********** finish clickWebElementCartPage ********** \n")
+        this.commonValidators.validateWebElementToBeVisible(webElement);
+        console.log("********** Finish validateProductOnCartPage ********** \n")
     }
+
 
 
 }

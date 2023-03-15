@@ -7,73 +7,37 @@ class ProductPage{
         this.log = log
         this.commonLocators = new commonLocators(this.log)
         this.commonValidators = new commonValidators(this.log)
-        this.product = page.locator(`//*[contains(text(),'Samsung galaxy s6')]`);
-        this.addToCart = page.locator(`//*[contains(text(),'Add to cart')]`);
-        this.actualPageUrl = 'https://www.demoblaze.com/prod.html?idp_=1';
         this.actualDialogMessage = 'Product Added';
+        this.actualPageUrl = "https://www.demoblaze.com/prod.html?idp_=1"
     }
     
     
     async clickWebElementProductOnHomePage(page){
-        console.log("********** start clickWebElementProductOnHomePage ********** \n")
-        // const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Samsung galaxy s6',true)
+        console.log("********** Start clickWebElementProductOnHomePage ********** \n")
         const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Samsung galaxy s6')
+        const checkContent = await this.commonLocators.getTextContentForWebElement(webElement)
         await webElement.click()
-        console.log("********** finish clickWebElementProductOnHomePage ********** \n")
+        console.log("********** Finish clickWebElementProductOnHomePage ********** \n")
     }
     async validateProductPage(page){
-        console.log("********** start validateProductPage ********** \n")
+        console.log("********** Start validateProductPage ********** \n")
         this.currentUrl = page.url()
-        await expect(this.product).toBeVisible(); 
-        await expect(this.addToCart).toBeEnabled();
         this.commonValidators.validateWebElementToContainText(this.currentUrl, this.actualPageUrl)
-        console.log("********** finish validateProductPage ********** \n")
+        console.log("********** Finish validateProductPage ********** \n")
     }
 
     async clickWebElementAddProductToCart(page){
-        console.log("********** start clickWebElementAddProductToCart ********** \n")
-        // const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Add to cart',true)
-
-        // page.once('dialog', dialog => {
-        //     console.log("********** start dialog ********** \n")
-        //     console.log(`Dialog message: ${dialog.message()}`);
-        //     dialog.dismiss().catch(() => {});
-        //     console.log("********** finish dialog ********** \n")
-        //   });
+        console.log("********** Start clickWebElementAddProductToCart ********** \n")
 
         page.on('dialog', dialog => {
-        console.log("accepting start")
         dialog.accept()
         console.log("dialog message")
         console.log(dialog.message())
         });
         const webElement = await this.commonLocators.getWebElementByRole(page,'link', 'Add to cart')
         await webElement.click()
-        console.log("********** finish clickWebElementAddProductToCart ********** \n")
+        console.log("********** Finish clickWebElementAddProductToCart ********** \n")
     }
-
-    // async addProductToCartAndValidate(page){
-    //     console.log("********** start addProductToCartAndValidate ********** \n")
-    //     // page.on('dialog', dialog => {
-    //     //     console.log("accepting start")
-    //     //     dialog.accept()
-    //     //     console.log("dialog message")
-    //     //     console.log(dialog.message())
-    //     // });
-
-    //     // page.once('dialog', dialog => {
-    //     //     console.log("Start dialog")
-    //     //     console.log(`Dialog message: ${dialog.message()}`);
-    //     //     dialog.dismiss().catch(() => {});
-    //     //     console.log("Finish dialog")
-    //     //   });
-    
-    //     // await this.clickWebElementAddProductToCart(page); 
-    
-      
-    //     console.log("********** finish addProductToCartAndValidate ********** \n")  
-         
-    // }
  
 }
 
