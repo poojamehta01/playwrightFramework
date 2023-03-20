@@ -22,6 +22,9 @@ test("click addToCart and navigate to cartPage", async ({ page }, testInfo) => {
   await productPage.AddProductToCart(page);
   await screentShot.takeScreenShot(page, testInfo, "addToCartCompleted");
 
-  await cartPage.validateProductOnCartPage(page);
+  await cartPage.validateProductOnCartPage(page,PHONE.SAMSUNG_GALAXY_S6);
   await screentShot.takeScreenShot(page, testInfo, "cartPage");
+  //await cartPage.deleteProductandVerify(page,1)
+  //await cartPage.deleteProductandVerify(page,1)
+  await cartPage.placeOrder(page)
 });
