@@ -5,9 +5,9 @@ const CommonFunctions = require("../utils/CommonFunctions");
 
 const {
   MESSAGE,
-  BUTON_TEXT,
+  BUTTON_TEXT,
   ROLE_TYPE,
-} = require("../constants/testConstants/commonConstant");
+} = require("../constants/testConstants/commonConstants");
 const actualDialogMessage = "";
 const { PRODUCT_URL } = require("../constants/testConstants/homePageConstants");
 class ProductPage {
@@ -86,7 +86,7 @@ class ProductPage {
     const webElement = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.LINK,
-      BUTON_TEXT.ADD_TO_CART
+      BUTTON_TEXT.ADD_TO_CART
     );
     webElement.click();
     console.log("********** Finish AddProductToCart ********** \n");

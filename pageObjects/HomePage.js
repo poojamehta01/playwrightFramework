@@ -9,7 +9,7 @@ const homePageLocators = require("../constants/testLocators/homePageLocators");
 const CommonLocators = require("../utils/CommonLocators");
 const CommonValidators = require("../utils/CommonValidators");
 const CommonFunctions = require("../utils/CommonFunctions");
-const { ROLE_TYPE } = require("../constants/testConstants/commonConstant");
+const { ROLE_TYPE } = require("../constants/testConstants/commonConstants");
 class HomePage {
   constructor(page) {
     this.page = page;

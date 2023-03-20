@@ -2,14 +2,16 @@ const { expect } = require("@playwright/test");
 const commonLocators = require("../utils/CommonLocators");
 const commonValidators = require("../utils/CommonValidators");
 const {
-  BUTON_TEXT,
+  BUTTON_TEXT,
   ROLE_TYPE,
   MESSAGE,
-} = require("../constants/commonConstant");
+} = require("../constants/testConstants/commonConstants");
 const {
   LABEL,
   ADD_ORDER_DETAILS,
 } = require("../constants/testConstants/checkoutPageConstants");
+const cartPageLocators = require("../constants/testLocators/cartPageLocators");
+
 let actualAmount = "";
 class CheckoutPage {
   constructor(page, log) {
@@ -26,7 +28,7 @@ class CheckoutPage {
     const webElement = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.BUTTON,
-      BUTON_TEXT.PURCHASE
+      BUTTON_TEXT.PURCHASE
     );
     this.commonValidators.validateWebElementToBeVisible(webElement);
     console.log(
@@ -106,7 +108,7 @@ class CheckoutPage {
     const webElement = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.BUTTON,
-      BUTON_TEXT.PURCHASE
+      BUTTON_TEXT.PURCHASE
     );
     this.commonValidators.validateWebElementToBeVisible(webElement);
     webElement.click();
@@ -118,7 +120,7 @@ class CheckoutPage {
     const webElement = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.BUTTON,
-      BUTON_TEXT.OK
+      BUTTON_TEXT.OK
     );
     this.commonValidators.validateWebElementToBeVisible(webElement);
     const successText = await page
@@ -128,8 +130,23 @@ class CheckoutPage {
       successText,
       MESSAGE.SUCCESS_MESSAGE
     );
-    webElement.click();
+    await webElement.click();
     console.log("********** Finish validatePurchaseIfSuccessful ********** \n");
+
+    // Future scope : add validation for prod
+    // Verify cartPage is empty
+    const cartPageNav = await this.commonLocators.getWebElementByRole(
+      page,
+      ROLE_TYPE.LINK,
+      "Cart"
+    );
+    cartPageNav.click();
+    const tableElement = await this.commonLocators.getWebElementByLocator(
+      page,
+      cartPageLocators.tableLocator
+    );
+
+    await expect(await tableElement.isVisible()).toBeFalsy();
   }
 }
 
