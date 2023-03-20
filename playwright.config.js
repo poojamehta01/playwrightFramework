@@ -19,8 +19,10 @@ module.exports = defineConfig({
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 10000,
+    
   },
+  globalTimeout: 600000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -48,10 +50,10 @@ module.exports = defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     // {
     //   name: 'firefox',
@@ -78,10 +80,10 @@ module.exports = defineConfig({
     //   name: 'Microsoft Edge',
     //   use: { channel: 'msedge' },
     // },
-    {
-      name: 'Google Chrome',
-      use: { channel: 'chrome' },
-    },
+    // {
+    //   name: 'Google Chrome',
+    //   use: { channel: 'chrome' },
+    // },
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
