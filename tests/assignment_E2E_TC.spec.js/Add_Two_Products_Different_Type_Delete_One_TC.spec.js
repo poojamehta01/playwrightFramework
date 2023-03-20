@@ -14,6 +14,7 @@ test("Add two different products of different category and delete the second add
   const checkoutPage = new CheckoutPage(page);
   const screentShot = new ScreenShotUtils(page);
 
+    // ● Add any 2 products to the cart.
   await homePage.goToHomePage(page);
   await homePage.goToCategoryOnHomePage(page,PHONE)
   await homePage.validateTitleLogoOnHomePage(page, SAMSUNG_GALAXY_S6);
@@ -24,10 +25,8 @@ test("Add two different products of different category and delete the second add
   await productPage.AddProductToCart(page);
   await screentShot.takeScreenShot(page, testInfo, "addToCartCompleted");
 
+    // ● Go to the cart view and verify if the products are available.
   await cartPage.validateProductOnCartPage(page, SAMSUNG_GALAXY_S6);
-
-
-  // add product to cart twice
 
   await homePage.goToHomePage(page);
   await homePage.goToCategoryOnHomePage(page,LAPTOP)
@@ -38,21 +37,23 @@ test("Add two different products of different category and delete the second add
   await productPage.validateProductOnProductPage(page, MACBOOK_AIR);
   await productPage.AddProductToCart(page);
   await screentShot.takeScreenShot(page, testInfo, "addToCartCompleted");
-
+  
   await cartPage.validateProductOnCartPage(page, MACBOOK_AIR);
-  // delete extra added product
+     // ● Delete the 2nd item from the cart
   await cartPage.deleteProductandVerify(page,MACBOOK_AIR);
   test.slow()
   await cartPage.placeOrder(page);
   await screentShot.takeScreenShot(page, testInfo, "cartPage");
   await checkoutPage.checkProductAddedOnCheckOutPage(page);
 
-
+  // ● Place the order by entering the details.
   await checkoutPage.enterMandatoryCheckoutDetails(page);
   await checkoutPage.enterOptionCheckoutDetails(page);
 
- await checkoutPage.makePurchase(page);
+  await checkoutPage.makePurchase(page);
   await screentShot.takeScreenShot(page, testInfo, "purchaseSuccess");
+  // ● Check if the order is placed correctly.
+
   await checkoutPage.validatePurchaseIfSuccessful(page);
  
 });
