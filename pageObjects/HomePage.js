@@ -56,6 +56,8 @@ class HomePage {
     );
   }
 
+  // Here we validate below product details
+  // desc,image,price,title
   async validateProductOnHomePage(page, testDataTitle) {
     console.log("********** Start clickProductOnHomePage ********** \n");
 

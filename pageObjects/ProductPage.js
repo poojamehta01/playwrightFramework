@@ -19,6 +19,8 @@ class ProductPage {
     this.commonFunctions = new CommonFunctions(this.log);
   }
 
+  // Here we validate below product details
+  // desc,image,price,title and url
   async validateProductOnProductPage(page, testDataTitle) {
     console.log("********** Start validateProductOProductPage ********** \n");
     this.currentUrl = page.url();

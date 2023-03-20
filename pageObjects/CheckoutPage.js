@@ -10,7 +10,7 @@ const {
   LABEL,
   ADD_ORDER_DETAILS,
 } = require("../constants/testConstants/checkoutPageConstants");
-const cartPageLocators = require("../constants/testLocators/cartPageLocators");
+const checkoutPageLocators = require("../constants/testLocators/checkoutPageLocators");
 
 let actualAmount = "";
 class CheckoutPage {
@@ -36,6 +36,7 @@ class CheckoutPage {
     );
   }
 
+  // Here we enter details for name and credit card
   async enterMandatoryCheckoutDetails(page) {
     console.log("********** Start enterMandatoryCheckoutDetails ********** \n");
     const nameElement = await this.commonLocators.getWebElementByLabel(
@@ -60,6 +61,7 @@ class CheckoutPage {
     );
   }
 
+  // here we enter optionalDetails
   async enterOptionCheckoutDetails(page) {
     console.log("********** Start enterMandatoryCheckoutDetails ********** \n");
 
@@ -115,6 +117,7 @@ class CheckoutPage {
     console.log("********** Finish makePurchase ********** \n");
   }
 
+  // Validate if purchase is successfuly by checking succesMesage and orderDetails
   async validatePurchaseIfSuccessful(page) {
     console.log("********** Start validatePurchaseIfSuccessful ********** \n");
     const webElement = await this.commonLocators.getWebElementByRole(
@@ -130,6 +133,10 @@ class CheckoutPage {
       successText,
       MESSAGE.SUCCESS_MESSAGE
     );
+
+    const orderDetailsText = await this.commonLocators.getWebElementByLocator(page,checkoutPageLocators.orderDetailsLocator)
+    console.log("this are the order Details")
+    this.getOrderDetails(await orderDetailsText.textContent());
     await webElement.click();
     console.log("********** Finish validatePurchaseIfSuccessful ********** \n");
 
@@ -149,7 +156,32 @@ class CheckoutPage {
     // );
 
     // await expect(await tableRowElement.isVisible()).toBeFalsy();
+
+    // future scope we can also have tc and validations for close and cancle button 
   }
+
+  getOrderDetails(orderDetailsString){
+    const idRegex = /Id: (\d+)/;
+    const amountRegex = /Amount: (\d+) USD/;
+    const cardNumberRegex = /Card Number: (\d{4} \d{4} \d{4} \d{4})/;
+    const nameRegex = /Name: ([A-Z]+)/;
+    const dateRegex = /Date: (\d{1,2}\/\d{1,2}\/\d{4})/;
+
+    const idMatch = orderDetailsString.match(idRegex);
+    const amountMatch = orderDetailsString.match(amountRegex);
+    const cardNumberMatch = orderDetailsString.match(cardNumberRegex);
+    const nameMatch = orderDetailsString.match(nameRegex);
+    const dateMatch = orderDetailsString.match(dateRegex);
+
+    const id = idMatch ? idMatch[1] : null;
+    const amount = amountMatch ? amountMatch[1] : null;
+    const cardNumber = cardNumberMatch ? cardNumberMatch[1] : null;
+    const name = nameMatch ? nameMatch[1] : null;
+    const date = dateMatch ? dateMatch[1] : null;
+
+    console.log(id, amount, cardNumber, name, date);
 }
+}
+  
 
 module.exports = CheckoutPage;
