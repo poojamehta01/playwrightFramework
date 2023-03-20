@@ -1,3 +1,4 @@
+// Here we have constants to be utilised during checkoutPage validations
 module.exports = {
   LABEL: {
     NAME: "Total: ",

@@ -1,3 +1,4 @@
+// Here we have constants to be utilised during common validations
 module.exports = {
   BUTTON_TEXT: {
     ADD_TO_CART: "Add to cart",
