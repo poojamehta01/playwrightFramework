@@ -1,4 +1,7 @@
 module.exports = {
-  amountLocator: `//h3[@id='totalp']`,
-  tableLocator: `//tbody[@id='tbodyid']`,
+  amountLocator: "#totalp",
+  tableLocator: "#tbodyid",
+  tableRowLocator : "#tbodyid tr",
+  deleteLocator : "//tbody[@id='tbodyid']//tr[$ID]//td[4]//a"
+  
 };

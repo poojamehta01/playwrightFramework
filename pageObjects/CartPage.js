@@ -3,7 +3,7 @@ const commonLocators = require("../utils/CommonLocators");
 const commonValidators = require("../utils/CommonValidators");
 const HomePage = require("./HomePage");
 const CommonValidators = require("../utils/CommonValidators");
-const { amountLocator, tableLocator } = require("../testLocators/cartPage");
+const cartPageLocators = require("../constants/testLocators/cartPageLocators");
 
 class CartPage {
   constructor(page, log) {
@@ -18,7 +18,7 @@ class CartPage {
     console.log("********** Start validateProductOnCartPage ********** \n");
     const tableElement = await this.commonLocators.getWebElementByLocator(
       page,
-      tableLocator
+      cartPageLocators.tableLocator
     );
     this.commonValidators.validateWebElementCount(tableElement, 1);
     console.log("********** Finish validateProductOnCartPage ********** \n");
@@ -26,7 +26,7 @@ class CartPage {
 
   async placeOrder(page, item) {
     console.log("********** Start placeOrder ********** \n");
-    const amountWebElement = await page.locator(amountLocator).first();
+    const amountWebElement = await page.locator(cartPageLocators.amountLocator).first();
     await this.commonValidators.validateWebElementCount(amountWebElement, 1);
     actualAmount = await this.commonLocators.getTextContentForWebElement(
       await amountWebElement

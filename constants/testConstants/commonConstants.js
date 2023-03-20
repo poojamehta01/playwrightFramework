@@ -1,5 +1,5 @@
 module.exports = {
-  BUTON_TEXT: {
+  BUTTON_TEXT: {
     ADD_TO_CART: "Add to cart",
     PLACE_ORDER: "Place Order",
     PURCHASE: "Purchase",
