@@ -12,7 +12,7 @@ class CommonLocators {
     );
     console.log(`********** Finish getWebElementByRole **********\n`);
     //this.commonValidators.validateWebElementToBeVisible(page.getByRole(type, { name: locatorName}))
-    return await page.getByRole(type, { name: locatorName });
+    return await page.getByRole(type, { name: locatorName, exact: true });
   }
 
   async clickOnWebElement(page, locator) {
