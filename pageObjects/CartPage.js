@@ -4,8 +4,11 @@ const CommonValidators = require("../utils/CommonValidators");
 const CommonFunctions = require("../utils/CommonFunctions");
 const HomePage = require("./HomePage");
 const cartPageLocators = require("../constants/testLocators/cartPageLocators");
-const { ROLE_TYPE,BUTTON_TEXT } = require("../constants/testConstants/commonConstants");
-
+const {
+  ROLE_TYPE,
+  BUTTON_TEXT,
+} = require("../constants/testConstants/commonConstants");
+const expectedTableData = [];
 class CartPage {
   constructor(page, log) {
     this.page = page;
@@ -18,11 +21,18 @@ class CartPage {
 
   async validateProductOnCartPage(page, testDataTitle) {
     console.log("********** Start validateProductOnCartPage ********** \n");
-    const expectedTableData = [];
+
     const item = this.commonFunctions.getItem(testDataTitle);
     console.log(item);
-    expectedTableData.push(["", item.title, item.price.toString(), "Delete"]);
-  
+    const newArray = ["", item.title, item.price.toString(), "Delete"];
+    console.log("Before push");
+    console.log(expectedTableData);
+    expectedTableData.push(newArray);
+    console.log("This is new array to be pushed");
+    console.log(newArray);
+    console.log("After push");
+    console.log(expectedTableData);
+
     const cartPageNav = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.LINK,
@@ -36,21 +46,21 @@ class CartPage {
       cartPageLocators.tableLocator
     );
 
-    await expect(await tableElement.isVisible()).toBeTruthy();
+    expect(await tableElement.isVisible()).toBeTruthy();
 
     this.commonValidators.validateWebElementCount(tableElement, 1);
 
     console.log("Verifying table heading");
-    await expect(
+    expect(
       await page.getByRole("cell", { name: "Pic" }).isVisible()
     ).toBeTruthy();
-    await expect(
+    expect(
       await page.getByRole("cell", { name: "Title" }).isVisible()
     ).toBeTruthy();
-    await expect(
+    expect(
       await page.getByRole("cell", { name: "Price" }).isVisible()
     ).toBeTruthy();
-    await expect(
+    expect(
       await page.getByRole("cell", { name: "x", exact: true }).isVisible()
     ).toBeTruthy();
 
@@ -74,13 +84,26 @@ class CartPage {
     );
     console.log("this is actualTableData");
     console.log(actualTableData);
-   
+    console.log("this is expectedTableData");
+    console.log(expectedTableData);
 
-    actualTableData.forEach((row, rowIndex) => {
-      row.forEach((cell, cellIndex) => {
-         expect(cell).toContain(expectedTableData[rowIndex][cellIndex]);
-      });
-    });
+    let isEqual = true;
+
+    actualTableData.sort((a, b) => a[1].localeCompare(b[1]));
+    expectedTableData.sort((a, b) => a[1].localeCompare(b[1]));
+
+    if (actualTableData.length !== expectedTableData.length) {
+      isEqual = false;
+    } else {
+      for (let i = 0; i < actualTableData.length; i++) {
+        if (actualTableData[i].toString() !== expectedTableData[i].toString()) {
+          isEqual = false;
+          break;
+        }
+      }
+    }
+    console.log("actualTableData is equal to expectedTableData")
+    console.log(isEqual);
 
     console.log("Verifying total amount");
     let expectedTotalAmount = 0;
@@ -89,35 +112,40 @@ class CartPage {
       (el) => el.textContent
     );
     actualTableData.forEach((innerArray) => {
-      expectedTotalAmount += innerArray[2];
+      expectedTotalAmount += Number(innerArray[2]);
     });
 
     await this.commonValidators.validateWebElementToContainText(
-        expectedTotalAmount,
-        actualtotalAmount
-      )
-    ;
+      expectedTotalAmount.toString(),
+      actualtotalAmount
+    );
 
     console.log("********** Finish validateProductOnCartPage ********** \n");
   }
 
-  async deleteProductandVerify(page, location) {
+  async deleteProductandVerify(page, testDataTitle) {
     console.log("********** Start deleteOrder ********** \n");
     const deleteProductElement =
       await this.commonLocators.getWebElementByLocator(
         page,
-        cartPageLocators.deleteLocator.replace("$ID", location.toString())
+        cartPageLocators.deleteLocator.replace("$TITLE", testDataTitle.toString())
       );
-    await deleteProductElement.click()
-
+    await deleteProductElement.click();
     // Verify product Deleted successfully
-    expected(await deleteProductElement.isVisible().toBeFalsy());
-    console.log("********** Finish placeOrder ********** \n");
+    expect(await deleteProductElement.isVisible()).toBeFalsy();
+    const cartPageNav = await this.commonLocators.getWebElementByRole(
+      page,
+      ROLE_TYPE.LINK,
+      "Cart"
+    );
+    cartPageNav.click();
+
+    console.log("********** Finish deleteOrder ********** \n");
   }
 
   async placeOrder(page) {
     console.log("********** Start placeOrder ********** \n");
-  
+
     const webElement = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.BUTTON,

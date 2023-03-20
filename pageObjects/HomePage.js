@@ -9,7 +9,11 @@ const homePageLocators = require("../constants/testLocators/homePageLocators");
 const CommonLocators = require("../utils/CommonLocators");
 const CommonValidators = require("../utils/CommonValidators");
 const CommonFunctions = require("../utils/CommonFunctions");
-const { ROLE_TYPE } = require("../constants/testConstants/commonConstants");
+const {
+  BUTTON_TEXT,
+  ROLE_TYPE,
+  MESSAGE,
+} = require("../constants/testConstants/commonConstants");
 class HomePage {
   constructor(page) {
     this.page = page;
@@ -25,6 +29,14 @@ class HomePage {
     console.log("********** Finish goToHomePage ********** \n");
   }
 
+  async goToCategoryOnHomePage(page, category) {
+    const categoryElement = await this.commonLocators.getWebElementByRole(
+      page,
+      ROLE_TYPE.LINK,
+      category
+    );
+    await categoryElement.click();
+  }
   async validateTitleLogoOnHomePage(page, testDataTitle) {
     console.log(
       "********** Start validateTitleLogoProductDetails ********** \n"

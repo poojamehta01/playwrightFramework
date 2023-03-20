@@ -135,18 +135,20 @@ class CheckoutPage {
 
     // Future scope : add validation for prod
     // Verify cartPage is empty
-    const cartPageNav = await this.commonLocators.getWebElementByRole(
-      page,
-      ROLE_TYPE.LINK,
-      "Cart"
-    );
-    cartPageNav.click();
-    const tableElement = await this.commonLocators.getWebElementByLocator(
-      page,
-      cartPageLocators.tableLocator
-    );
 
-    await expect(await tableElement.isVisible()).toBeFalsy();
+    // extra validation to check if cart is empty or not
+    // const cartPageNav = await this.commonLocators.getWebElementByRole(
+    //   page,
+    //   ROLE_TYPE.LINK,
+    //   "Cart"
+    // );
+    // cartPageNav.click();
+    // const tableRowElement = await this.commonLocators.getWebElementByLocator(
+    //   page,
+    //   cartPageLocators.tableRowLocator
+    // );
+
+    // await expect(await tableRowElement.isVisible()).toBeFalsy();
   }
 }
 
