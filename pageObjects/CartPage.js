@@ -9,6 +9,7 @@ const {
   BUTTON_TEXT,
 } = require("../constants/testConstants/commonConstants");
 const expectedTableData = [];
+
 class CartPage {
   constructor(page, log) {
     this.page = page;
@@ -18,21 +19,15 @@ class CartPage {
     this.commonFunctions = new CommonFunctions();
     this.homePage = new HomePage(page);
   }
-
+  // Here validation product details on cartPage
+  // Validations done on table values rows and columns
+  // Valdations for totalAmount actuals vs expected
   async validateProductOnCartPage(page, testDataTitle) {
     console.log("********** Start validateProductOnCartPage ********** \n");
 
     const item = this.commonFunctions.getItem(testDataTitle);
-    console.log(item);
     const newArray = ["", item.title, item.price.toString(), "Delete"];
-    console.log("Before push");
-    console.log(expectedTableData);
     expectedTableData.push(newArray);
-    console.log("This is new array to be pushed");
-    console.log(newArray);
-    console.log("After push");
-    console.log(expectedTableData);
-
     const cartPageNav = await this.commonLocators.getWebElementByRole(
       page,
       ROLE_TYPE.LINK,
@@ -68,11 +63,8 @@ class CartPage {
     const actualTableData = await page.$$eval(
       cartPageLocators.tableRowLocator,
       (rows) => {
-        console.log("inside rows");
         const testRows = rows.map((row) => {
-          console.log("inside row");
           const cells = row.querySelectorAll("td");
-          console.log("this is cells");
           console.log(cells);
           const testArray = Array.from(cells).map((cell) => cell.textContent);
           console.log(testArray);
@@ -87,6 +79,15 @@ class CartPage {
     console.log("this is expectedTableData");
     console.log(expectedTableData);
 
+    this.sortAndValidateTable(actualTableData,expectedTableData)
+    await this.verifyTotalAmount(page,actualTableData);
+    
+    console.log("********** Finish validateProductOnCartPage ********** \n");
+  }
+
+  // Here we are sorting both the actual and expected tables on basis on title 
+  // and then comparing the data
+  sortAndValidateTable(actualTableData,expectedTableData){
     let isEqual = true;
 
     actualTableData.sort((a, b) => a[1].localeCompare(b[1]));
@@ -104,7 +105,10 @@ class CartPage {
     }
     console.log("actualTableData is equal to expectedTableData")
     console.log(isEqual);
+  }
 
+  // Here we are verfying the total amount based on sum on prices of products present on cartPage
+  async verifyTotalAmount(page,actualTableData) {
     console.log("Verifying total amount");
     let expectedTotalAmount = 0;
     const actualtotalAmount = await page.$eval(
@@ -119,10 +123,9 @@ class CartPage {
       expectedTotalAmount.toString(),
       actualtotalAmount
     );
-
-    console.log("********** Finish validateProductOnCartPage ********** \n");
   }
 
+  // Here we are deleting the product and checking the  element is not present on the cartPage
   async deleteProductandVerify(page, testDataTitle) {
     console.log("********** Start deleteOrder ********** \n");
     const deleteProductElement =
@@ -143,6 +146,7 @@ class CartPage {
     console.log("********** Finish deleteOrder ********** \n");
   }
 
+  // Here we are placing the order for products added
   async placeOrder(page) {
     console.log("********** Start placeOrder ********** \n");
 
