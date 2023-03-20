@@ -1,0 +1,17 @@
+
+const productPageConstants = require("../constants/testConstants/productPageConstants");
+
+class CommonFunctions {
+   
+getItem(testDataTitle) {
+console.log(`********** Start getItem **********\n`);
+const testData = productPageConstants.find(
+    (items) => items.title == testDataTitle
+    );
+console.log(testData)
+console.log(`********** Finish getItem **********\n`);
+return testData
+}
+}
+
+module.exports = CommonFunctions;
